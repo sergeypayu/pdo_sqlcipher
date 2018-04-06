@@ -128,6 +128,9 @@ if [ $? -ne 0 ]; then
 	exit $?
 fi
 
+# hardcode VFS type to unix-excl
+sed -i 's/i = sqlite3_open(filename, &H->db);/sqlite3_vfs_register(sqlite3_vfs_find("unix-excl"), 1);\n&/' "${BUILD_DIR}/sqlite_driver.c"
+
 # magic :)
 for FILE in "${BUILD_DIR}"/*
 do
