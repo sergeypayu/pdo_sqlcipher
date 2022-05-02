@@ -57,7 +57,7 @@ fi
 SQLCIPHER_SRC="sqlcipher.git"
 
 if [ ! -d "${SQLCIPHER_SRC}" ]; then
-	git clone "git://github.com/sqlcipher/sqlcipher.git" "${SQLCIPHER_SRC}"
+	git clone "https://github.com/sqlcipher/sqlcipher.git" "${SQLCIPHER_SRC}"
 	if [ $? -ne 0 ]; then
 		exit $?
 	fi
