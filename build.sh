@@ -175,11 +175,6 @@ do
 	if [ $? -ne 0 ]; then
 		exit $?
 	fi
-
-	sed -rie 's/(".*)sqlcipher3(.*")/\1sqlite3\2/g' "${FILE}"
-	if [ $? -ne 0 ]; then
-		exit $?
-	fi
 done
 
 #
