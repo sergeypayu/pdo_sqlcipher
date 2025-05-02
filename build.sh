@@ -17,6 +17,9 @@ CFLAGS=" \
 	-DSQLITE_ENABLE_ICU \
 	-DSQLITE_SOUNDEX \
 	-DSQLITE_DEFAULT_FOREIGN_KEYS=1 \
+	-DSQLITE_EXTRA_INIT=sqlcipher_extra_init \
+	-DSQLITE_EXTRA_SHUTDOWN=sqlcipher_extra_shutdown \
+	-DSQLITE_TEMP_STORE=2 \
 	-I. -I/usr/local/include"
 
 LDFLAGS="-lcrypto -licuuc -licui18n -L/usr/local/lib"
@@ -88,7 +91,6 @@ if [ ! -f "${SQLCIPHER_SRC}/sqlite3.c" ]; then
 	# subject to change (see http://www.sqlite.org/compile.html)
 	./configure \
 		--disable-shared \
-		--enable-tempstore=yes \
 		CFLAGS="${CFLAGS}" \
 		LDFLAGS="${LDFLAGS}"
 	if [ $? -ne 0 ]; then
@@ -199,7 +201,7 @@ if [ $? -ne 0 ]; then
 fi
 
 ./configure \
-	CFLAGS="${CFLAGS}" \
+	CFLAGS="${CFLAGS} -DHAVE_STDINT_H=1" \
 	LDFLAGS="${LDFLAGS}"
 if [ $? -ne 0 ]; then
 	exit $?
@@ -247,7 +249,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # sqlcipher static binary
-cp "${SQLCIPHER_SRC}/sqlcipher" "${RELEASE_DIR}/sqlcipher"
+cp "${SQLCIPHER_SRC}/sqlite3" "${RELEASE_DIR}/sqlcipher"
 if [ $? -ne 0 ]; then
 	exit $?
 fi
